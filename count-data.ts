@@ -14,7 +14,7 @@
       .map((line: string, index: number) =>
         results.push([
           file,
-          String(index),
+          String(index + 1),
           line.split(" ")[0],
           String(
             line
@@ -26,6 +26,6 @@
           ),
         ])
       );
-    fs.appendFileSync(resultFileName, results.join("\n"));
+    fs.appendFileSync(resultFileName, results.join("\n") + "\n");
   });
 })();
