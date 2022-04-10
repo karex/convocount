@@ -6,5 +6,9 @@
   },
   "dependencies": {
     "csv-parser": "^3.0.0"
+  },
+  "scripts": {
+    "conv1": "npx ts-node ./count-data.ts",
+    "conv2": "npx ts-node ./count-dialogues.ts"
   }
 }

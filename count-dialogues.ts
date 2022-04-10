@@ -11,17 +11,16 @@
     .pipe(csv())
     .on("data", (row: any) => {
       if (row.text) {
-        const text = row.text
-          .replace(/^”/, "")
-          .replaceAll("”“", "”\n\r“")
-          .split(/\r?\n\r?/)
-          .filter((l: string) => l !== "");
+        const text = row["NORSK 2"]
+          .replaceAll(/[^\w\s]+/g, "")
+          .split(/\r?\n/)
+          .filter((i: string) => i.trim() !== "");
         text.map((line: string, index: number) => {
           results.push([
             row.ID,
             text.length,
             index + 1,
-            line.split(/ |—/).filter((w) => w !== "").length,
+            line.trim().split(/\s+/).length,
           ]);
         });
       }
