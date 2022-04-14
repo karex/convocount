@@ -11,21 +11,27 @@
     const results = [] as string[][];
     lines
       .filter((line: string) => line !== "")
-      .map((line: string, index: number) =>
+      .map((line: string, index: number) => {
+        const first = line.split(" ")[0];
+        const speaker = !isNaN(Number(first))
+          ? first
+          : /^[A-ZØÅÆ]+$/.test(first)
+          ? first
+          : "N/A";
+        const text = speaker === "N/A" ? line : line.substring(first.length);
         results.push([
           file,
           String(index + 1),
-          line.split(" ")[0],
+          speaker,
           String(
-            line
-              .split(" ")
-              .filter(
-                (e: string, i: number) =>
-                  i > 0 && !["?", "'", '"', "...", "*", "-", "#"].includes(e)
-              ).length
+            text
+              .replace(/[^\p{L}\s]+/gu, "")
+              .trim()
+              .split(/\s+/)
+              .filter((i: string) => i).length
           ),
-        ])
-      );
+        ]);
+      });
     fs.appendFileSync(resultFileName, results.join("\n") + "\n");
   });
 })();
