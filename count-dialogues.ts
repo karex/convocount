@@ -11,14 +11,14 @@
     .pipe(csv())
     .on("data", (row: any) => {
       if (row.text) {
-        const text = row["NORSK 2"]
+        const lines = row["NORSK 2"]
           .replaceAll(/[^\w\s]+/g, "")
           .split(/\r?\n/)
           .filter((i: string) => i.trim() !== "");
-        text.map((line: string, index: number) => {
+        lines.map((line: string, index: number) => {
           results.push([
             row.ID,
-            text.length,
+            lines.length,
             index + 1,
             line.trim().split(/\s+/).length,
           ]);
